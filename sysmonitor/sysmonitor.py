@@ -57,15 +57,22 @@ def startup_animation(device):
 
 
 def main():
+    
+    # Initialize the gpio
+    fan        = OutputDevice(17)
+    trans_oled = OutputDevice(18)
+    
+    # switch transistor on
+    fan.off()
+    trans_oled.on()
+    time.sleep(5)
+    
     # Initialize the OLED display
     serial = i2c(port=1, address=0x3C)
     device = ssd1306(serial)
     
     # Run startup animation
-    startup_animation(device)
-    
-    # Initialize the fan
-    fan = OutputDevice(17)  # fan is connected to GPIO 17
+    startup_animation(device)    
     
     while True:
         cpu_usage = get_cpu_usage()
